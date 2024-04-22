@@ -21,7 +21,6 @@ def create_user():
     # Error handling
     if not request.is_json:
         return {'error': 'Your content type must be in json'}, 400
-    
     data = request.json
     missing_fields = []
     for field in ['firstName' , 'lastName' , 'username' , 'email' , 'password']:
@@ -32,8 +31,9 @@ def create_user():
     
     # Check if username or email already exists
     for user in users_list:
-        if user['email'] == new_user['email'] or user['username'] == new_user['username']:
+        if user['email'] == data['email'] or user['username'] == data['username']:
             return {'error': 'User with that username and/or email already exists'}, 409
+        
     # Create a new user with the data received
     new_user = {
         'user_id': len(users_list) + 1,
@@ -77,19 +77,19 @@ def create_ingredient():
             missing_fields.append(field)
     if missing_fields:
         return {'error': f'You are missing the following required fields: {", ".join(missing_fields)}'}, 400
+    # Check if ingredient already exists
+    for ingredient in shopping_list:
+        if ingredient['ingredient'].lower() == data['ingredient'].lower():
+            return {'error': 'Ingredient with that name already exists'}, 409
     
-    ingredient_id = len(shopping_list) + 1  # Generate a new ingredient_id for the new task
+    # Create a new ingredient with the data received after error checking
     new_ingredient = {
-        'ingredient_id': ingredient_id,
+        'ingredient_id': len(shopping_list) + 1,
         'ingredient': data['ingredient'],
         'description': data['description'],
         'status': False,
         'date_added': datetime.now(timezone.utc).strftime('%Y-%m-%d')
         }
-    # Check if ingredient already exists
-    for ingredient in shopping_list:
-        if ingredient['ingredient'] == new_ingredient['ingredient']:
-            return {'error': 'Ingredient with that name already exists'}, 409
     # Add the new ingredient to the shopping_list
     shopping_list.append(new_ingredient)
     # Return a success message and the updated shopping_list
