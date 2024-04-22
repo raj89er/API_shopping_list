@@ -12,6 +12,7 @@ class Ingredient(db.Model):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.save()
     
     def __repr__(self) -> str:
         return f"<Ingredient {self.ingredient_id} | {self.ingredient}>"
