@@ -1,0 +1,14 @@
+
+# Next Step, add test ingredients to database
+
+flask shell
+NOT WORKING
+new_ingredient1 = Ingredient(ingredient='Tomato', description='Fresh and juicy red tomatoes', status=False)
+new_ingredient2 = Ingredient(ingredient='Onion', description='Crunchy and flavorful onions', status=True)
+new_ingredient3 = Ingredient(ingredient='Lettuce', description='Crisp and leafy lettuce', status=False)
+
+postman
+WORKING
+{ "ingredient": "onion", "description": "Make 'em cry" }
+{ "ingredient": "tomato", "description": "veg, fruit, or berry?" }
+{ "ingredient": "lettuse", "description": "...why though...?" }
