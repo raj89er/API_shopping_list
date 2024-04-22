@@ -44,10 +44,21 @@
     - [GET] Single ingredient by ID
     - [POST] Add a new ingredient. ensure to include parameters for required fields.
 
+## Saving/Installing PIP Dependencies
+
+1. Save the dependencies to a `requirements.txt` file with command:  
+    `pip freeze > requirements.txt`
+This will save all the dependencies to a file that can be used to install the dependencies in another environment.  
+
+2. Dependencies can be installed in another environment with the command:  
+    `pip install -r requirements.txt`
 
 ## Initial Database Setup
+
 1. Install Flask-SQLAlchemy and Flask-Migrate:  
     `pip install flask-sqlalchemy flask-migrate`
+
+
 2. Set up a `config.py` file in the root directory. Add the following to contents:  
     ```
     import os
@@ -57,6 +68,17 @@
     class Config:
         SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'app.db')
     ```
+    You can also enter a `key = value` pair in a `.env` file in the root directory to store the database URI if you'd like to connect to an external database.  
+    Here's a sample `.env` file:
+
+    ```
+    key = value
+
+    DATABASE_URL = `postgresql://username:password@localhost/db_name`
+    ```
+    Ensure to add the `.env` file to the `.gitignore` file to prevent it from being pushed to the repository. If you're using a `.env` file, also run command `pip install python-dotenv` to ensure the app can read the file. 
+<br>
+
 3. Create `models.py` with all the columns for the tables with the attributes, such as:
     ```
     from . import db
